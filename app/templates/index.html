@@ -1,7 +1,14 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
+{% block title %}CRUD de Empleados{% endblock %}
+{% block content %}
 
-{% block body %}
+  <div class="box-header">
+    <i class="fa fa-th"></i>
+    <h3 class="box-title">Inicio</h3>
+  </div>
 
-<h1>Index</h1>
+  <div class="box-body">
+    <a href="/empleado/">Ir a CRUD de Empleados</a>
+  </div>
 
 {% endblock %}

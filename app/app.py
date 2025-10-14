@@ -1,34 +1,33 @@
 from flask import Flask, flash, render_template, redirect, url_for, request, session
-from dao.DAOUsuario import DAOUsuario
+from dao.DAOEmpleado import DAOEmpleado
  
 
 app = Flask(__name__)
 app.secret_key = "mys3cr3tk3y"
-db = DAOUsuario()
-ruta='/usuario'
+db = DAOEmpleado()
+ruta='/empleado'
 
 @app.route('/')
 def inicio():
     return render_template('index.html')
 
 @app.route(ruta+'/')
-# @app.route('/usuario/')
 def index():
     data = db.read(None)
 
-    return render_template('usuario/index.html', data = data)
+    return render_template('empleado/index.html', data = data)
 
 @app.route(ruta+'/add/')
 def add():
-    return render_template('/usuario/add.html')
+    return render_template('/empleado/add.html')
 
-@app.route(ruta+'/addusuario', methods = ['POST', 'GET'])
-def addusuario():
+@app.route(ruta+'/addempleado', methods = ['POST', 'GET'])
+def addempleado():
     if request.method == 'POST' and request.form['save']:
         if db.insert(request.form):
-            flash("Nuevo usuario creado")
+            flash("Nuevo empleado creado")
         else:
-            flash("ERROR, al crear usuario")
+            flash("ERROR, al crear empleado")
 
         return redirect(url_for('index'))
     else:
@@ -42,10 +41,10 @@ def update(id):
         return redirect(url_for('index'))
     else:
         session['update'] = id
-        return render_template('usuario/update.html', data = data)
+        return render_template('empleado/update.html', data = data)
 
-@app.route(ruta+'/updateusuario', methods = ['POST'])
-def updateusuario():
+@app.route(ruta+'/updateempleado', methods = ['POST'])
+def updateempleado():
     if request.method == 'POST' and request.form['update']:
 
         if db.update(session['update'], request.form):
@@ -67,14 +66,14 @@ def delete(id):
         return redirect(url_for('index'))
     else:
         session['delete'] = id
-        return render_template('usuario/delete.html', data = data)
+        return render_template('empleado/delete.html', data = data)
 
-@app.route(ruta+'/deleteusuario', methods = ['POST'])
-def deleteusuario():
+@app.route(ruta+'/deleteempleado', methods = ['POST'])
+def deleteempleado():
     if request.method == 'POST' and request.form['delete']:
 
         if db.delete(session['delete']):
-            flash('Usuario eliminado')
+            flash('Empleado eliminado')
         else:
             flash('ERROR al eliminar')
         session.pop('delete', None)

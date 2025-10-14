@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}CRUD de Empleados{% endblock %}
+{% block content %}
+
+  <div class="box-header">
+    <i class="fa fa-th"></i>
+    <h3 class="box-title">Listado de Empleados</h3>
+    <div class="box-tools">
+      <a href="/empleado/add" class="btn .btn-success btn-sm">NUEVO</a>
+    </div>
+  </div>
+
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Telefono</th>
+          <th>Email</th>
+          <th>Direccion</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          <td>{{row[1]}}</td>
+          <td>{{row[2]}}</td>
+          <td>{{row[3]}}</td>
+          <td>{{row[4]}}</td>
+          <td>
+            <a href="/empleado/update/{{row[0]}}" class="btn btn-default btn-sm">EDITAR</a>
+            <a href="/empleado/delete/{{row[0]}}" class="btn btn-danger btn-sm">ELIMINAR</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box-footer">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+{% endblock %}
